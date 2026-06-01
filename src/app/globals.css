@@ -1,26 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0c0c0c;
+  --foreground: #f5f0e8;
+  --cream: #f5f0e8;
+  --cream-muted: #e8e0d0;
+  --green: #3e6b4e;
+  --green-light: #4a7d5a;
+  --green-dim: #2d4f38;
+  --gold: #c9a961;
+  --gold-muted: #a88b4a;
+  --black: #0c0c0c;
+  --black-light: #161616;
+  --black-card: #1a1a1a;
+  --black-border: #2a2a2a;
+  --red: #8b3a3a;
+  --red-light: #a04545;
+  --text-primary: #f5f0e8;
+  --text-secondary: #a09888;
+  --text-dim: #6b6358;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-cream: var(--cream);
+  --color-cream-muted: var(--cream-muted);
+  --color-ar-green: var(--green);
+  --color-ar-green-light: var(--green-light);
+  --color-ar-green-dim: var(--green-dim);
+  --color-ar-gold: var(--gold);
+  --color-ar-gold-muted: var(--gold-muted);
+  --color-ar-black: var(--black);
+  --color-ar-black-light: var(--black-light);
+  --color-ar-black-card: var(--black-card);
+  --color-ar-black-border: var(--black-border);
+  --color-ar-red: var(--red);
+  --color-ar-red-light: var(--red-light);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-dim: var(--text-dim);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--black-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-dim);
+}
+
+/* Score bar animation */
+@keyframes score-fill {
+  from { width: 0; }
+  to { width: var(--score-width); }
+}
+
+.score-bar-fill {
+  animation: score-fill 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Subtle card hover */
+.card-hover {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover:hover {
+  border-color: var(--green-dim);
+  box-shadow: 0 0 0 1px var(--green-dim);
 }

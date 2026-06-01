@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ListingStatus {
+  New
+  AutoRejected
+  NeedsReview
+  Watchlist
+  PrivateTarget
+  FollowUp
+  NewsletterCandidate
+  Acquired
+  Passed
+}
+
+model Listing {
+  id                String        @id @default(cuid())
+  name              String
+  url               String
+  source            String
+  askingPrice       Float?
+  monthlyRevenue    Float?
+  monthlyProfit     Float?
+  revenueMultiple   Float?
+  profitMultiple    Float?
+  assetType         String        @default("")
+  niche             String        @default("")
+  age               String        @default("")
+  trafficSources    String        @default("")
+  monthlyVisitors   Int?
+  emailListSize     Int?
+  monetization      String        @default("")
+  techStack         String        @default("")
+  ownerWorkload     String        @default("")
+  reasonForSale     String        @default("")
+  sellerClaims      String        @default("")
+  evidenceAvailable String        @default("")
+  riskNotes         String        @default("")
+  upsideNotes       String        @default("")
+  withinBudget      Boolean       @default(false)
+  firstSeen         DateTime      @default(now())
+  lastSeen          DateTime      @default(now())
+  status            ListingStatus @default(New)
+  score             Int           @default(0)
+  scoreBreakdown    Json?
+  dealMemo          String?       @db.Text
+  sourceHash        String        @unique
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+model ScanRun {
+  id            String    @id @default(cuid())
+  source        String
+  startedAt     DateTime  @default(now())
+  finishedAt    DateTime?
+  listingsFound Int       @default(0)
+  newAdded      Int       @default(0)
+  autoRejected  Int       @default(0)
+  errors        String    @default("")
+  createdAt     DateTime  @default(now())
+}
+
+model SourceHealth {
+  id               String    @id @default(cuid())
+  source           String    @unique
+  lastSuccess      DateTime?
+  lastFailure      DateTime?
+  consecutiveFails Int       @default(0)
+  isPaused         Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model DigestArchive {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  listings  Int      @default(0)
+  sentAt    DateTime @default(now())
+  createdAt DateTime @default(now())
+}
